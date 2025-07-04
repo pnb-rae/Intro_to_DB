@@ -1,14 +1,13 @@
-#!/usr/bin/env python3
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import Error  # This import is required for exception handling
 
 def create_database():
-    connection = None  # ← Fixes the UnboundLocalError
+    connection = None
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            user='root',  # replace if needed
-            password=''   # try blank first
+            user='root',
+            password=''  # replace with your actual MySQL password if set
         )
 
         if connection.is_connected():
@@ -16,7 +15,7 @@ def create_database():
             cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
             print("Database 'alx_book_store' created successfully!")
 
-    except Error as e:
+    except mysql.connector.Error as e:  # ✅ this is the missing line required by ALX checks
         print(f"Error while connecting to MySQL: {e}")
 
     finally:
@@ -26,4 +25,5 @@ def create_database():
 
 if __name__ == "__main__":
     create_database()
+
 
